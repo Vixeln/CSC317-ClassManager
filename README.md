@@ -16,3 +16,4 @@ A class management system for students to register and manage classes with ease 
 ### Work Distribution
 - Git Master: Vireak Ny (@Vixeln)
 - Database: Vireak Ny (@Vixeln)
+- HTML/CSS//JS: Ethan Garcia (@CaligulaXO)
