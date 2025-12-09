@@ -47,6 +47,18 @@ const createTables = async () => {
     `);
     console.log("✓ Courses table created");
 
+    // Create classes table
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS classes (
+        id SERIAL PRIMARY KEY,
+				course_id INTEGER REFERENCES courses(id),
+				meeting_location VARCHAR(30),
+				start_time TIMESTAMP NOT NULL,
+				end_time TIMESTAMP NOT NULL
+      )
+    `);
+    console.log("✓ Classes table created");
+
     // Create session table for connect-pg-simple
     await pool.query(`
       CREATE TABLE IF NOT EXISTS "session" (
