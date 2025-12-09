@@ -5,8 +5,8 @@
  * Usage: npm run db:init
  */
 
-require('dotenv').config();
-const { pool } = require('../config/database');
+require("dotenv").config();
+const { pool } = require("../config/database");
 
 const createTables = async () => {
   try {
@@ -21,7 +21,7 @@ const createTables = async () => {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    console.log('✓ Users table created');
+    console.log("✓ Users table created");
 
     // Create profile_images table
     await pool.query(`
@@ -33,7 +33,7 @@ const createTables = async () => {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    console.log('✓ Profile images table created');
+    console.log("✓ Profile images table created");
 
     // Create session table for connect-pg-simple
     await pool.query(`
@@ -49,7 +49,7 @@ const createTables = async () => {
     await pool.query(`
       CREATE INDEX IF NOT EXISTS "IDX_session_expire" ON "session" ("expire")
     `);
-    console.log('✓ Session table created');
+    console.log("✓ Session table created");
 
     // Create indexes for better query performance
     await pool.query(`
@@ -61,11 +61,11 @@ const createTables = async () => {
     await pool.query(`
       CREATE INDEX IF NOT EXISTS idx_profile_images_user_id ON profile_images(user_id)
     `);
-    console.log('✓ Indexes created');
+    console.log("✓ Indexes created");
 
-    console.log('\n✅ Database initialization complete!');
+    console.log("\n✅ Database initialization complete!");
   } catch (error) {
-    console.error('Error initializing database:', error);
+    console.error("Error initializing database:", error);
     process.exit(1);
   } finally {
     await pool.end();
