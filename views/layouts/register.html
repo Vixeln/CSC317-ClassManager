@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Class Manager</title>
+    <link rel="stylesheet" href="../public/css/styles.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Class Manager</div>
+        <div class="nav-links">
+            <a href="login.html" class="btn-outline">Login</a>
+        </div>
+    </nav>
+
+    <div class="form-container">
+        <h2>Create an Account</h2>
+        <p class="form-subtext">Join Class Manager and access all your class tools.</p>
+
+        <form id="registerForm">
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="example@mail.com" required>
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="At least 6 characters" required>
+            </div>
+
+            <div class="input-group">
+                <label>Confirm Password</label>
+                <input type="password" id="confirmPassword" placeholder="Re-enter password" required>
+            </div>
+
+            <p id="errorMessage" class="error-message"></p>
+
+            <button type="submit" class="cta-btn form-btn">Create Account</button>
+        </form>
+
+        <p class="switch-text">Already have an account?  
+            <a href="login.html">Login here</a>
+        </p>
+    </div>
+
+    <script src="../middlewares/js/auth.js"></script>
+</body>
+</html>
