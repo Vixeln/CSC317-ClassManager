@@ -43,9 +43,10 @@ const createTables = async () => {
 				subject VARCHAR(5) NOT NULL DEFAULT 'N/A',
 				number INTEGER NOT NULL,
 				credit INTEGER,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(subject, number)
       )
-    `);
+    `); // The UNIQUE constraint was suggested by Claude Haiku
     console.log("✓ Courses table created");
 
     // Create classes table
@@ -99,6 +100,10 @@ const createTables = async () => {
       CREATE INDEX IF NOT EXISTS idx_profile_images_user_id ON profile_images(user_id)
     `);
     console.log("✓ Indexes created");
+
+    if (process.env.NODE_ENV === "development") await populateTables();
+		// Test finding course subject
+    // if (process.env.NODE_ENV === "development") console.log(await Course.findCourseBySubject("MATH"));
 
     console.log("\n✅ Database initialization complete!");
   } catch (error) {
