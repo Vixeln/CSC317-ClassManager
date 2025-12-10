@@ -1,5 +1,5 @@
 /**
- * Section model
+ * Section model (The class instance, is the class full?)
  * Database operations for storing user profile images using PostgreSQL
  */
 
