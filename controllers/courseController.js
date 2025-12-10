@@ -18,7 +18,7 @@ exports.getSearchPage = (req, res) => {
 exports.searchClasses = async (req, res) => {
   try {
     const { subject, time } = req.query;
-    const activeTerm = await Term.findActive(); // You need models/Term.js!
+    const activeTerm = await Term.findActive();
     const termId = activeTerm ? activeTerm.id : 1; 
 
     const results = await Course.search({ subject, time, term: termId });
