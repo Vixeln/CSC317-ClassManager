@@ -1,0 +1,41 @@
+<%- include('../partials/header') %>
+
+<div class="container">
+    <h1 class="page-title">Search Classes</h1>
+
+    <div class="card filters" style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+            
+            <select id="filterSubject" style="padding: 10px; border-radius: 4px; border: 1px solid #ddd; flex: 1;">
+                <option value="">All Subjects</option>
+                <option value="CSC">Computer Science (CSC)</option>
+                <option value="MATH">Mathematics (MATH)</option>
+                <option value="ENGL">English (ENGL)</option>
+                <option value="HIST">History (HIST)</option>
+            </select>
+
+            <select id="filterTime" style="padding: 10px; border-radius: 4px; border: 1px solid #ddd; flex: 1;">
+                <option value="">Any Time</option>
+                <option value="morning">Morning (Before 12pm)</option>
+                <option value="afternoon">Afternoon (12pm - 5pm)</option>
+                <option value="evening">Evening (After 5pm)</option>
+            </select>
+
+            <button id="applyFilters" class="btn primary-btn" style="padding: 10px 20px; cursor: pointer;">
+                Apply Filters
+            </button>
+        </div>
+    </div>
+
+    <div class="card" style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h2 style="margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">Available Classes</h2>
+        
+        <div id="classList">
+            <p style="color: #666; font-style: italic;">Select a subject or time above and click "Apply Filters" to see classes.</p>
+        </div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+
+<%- include('../partials/footer') %>
