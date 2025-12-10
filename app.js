@@ -20,6 +20,8 @@ const { pool } = require('./config/database');
 const indexRoutes = require('./routes/index');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
+const courseRoutes = require('./routes/courses');
+const scheduleRoutes = require('./routes/schedule');
 
 // Import custom middleware
 const { setLocals } = require('./middlewares/locals');
@@ -110,6 +112,8 @@ app.use(setLocals);
 app.use('/', indexRoutes);
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
+app.use('/courses', courseRoutes);
+app.use('/schedule', scheduleRoutes);
 
 // Error handling middleware
 app.use(handleErrors);
