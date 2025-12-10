@@ -25,7 +25,21 @@ async function createCourse({ subject, number, description, credit }) {
   }
 }
 
+async function findCourseBySubject(subject) {
+  try {
+    const result = await query(
+      `SELECT * FROM courses
+			WHERE subject = $1
+			`,
+      [subject]
+    );
+    return result;
+  } catch (error) {
+    console.error("Error finding course: ", error);
+  }
+}
 
 module.exports = {
-  createCourse
+  createCourse,
+  findCourseBySubject,
 };
