@@ -6,6 +6,7 @@
  */
 
 require("dotenv").config();
+const Course = require("../models/Courses.js");
 const { pool } = require("../config/database");
 
 const createTables = async () => {
@@ -107,5 +108,25 @@ const createTables = async () => {
     await pool.end();
   }
 };
+
+/**
+ * @type {{subject: string, number: number, credit: number}[]}
+ */
+const testCourses = [
+  { subject: "CSC", number: 101, credit: 3 },
+  { subject: "CSC", number: 115, credit: 3 },
+  { subject: "MATH", number: 101, credit: 3 },
+  { subject: "MATH", number: 228, credit: 3 },
+  { subject: "CSC", number: 415, credit: 5 },
+  { subject: "PHYS", number: 230, credit: 3 },
+];
+
+async function populateTables() {
+  // Using for...of loop instead of forEach because we're handling async functions
+  for (const course of testCourses) {
+    console.log(`Attempt to insert ${course.subject} ${course.number} to courses`);
+		await Course.createCourse(course);
+  }
+}
 
 createTables();
