@@ -2,9 +2,11 @@
 
 A class management system for students to register and manage classes with ease and *style*.Unlike the SFSU Student Center, our app is simple and fast and does not require users to wait 15 to 30 seconds just for it to respond.
 ## Features
-- Manage classes in your semester schedule 
 - Look up classes for Computer Science majors as a student
-- Create and manage classes as an instructor
+- Manage classes in your semester schedule 
+	- Add or remove a class
+	- View class details
+
 
 ## Contributors
 ### People
@@ -16,4 +18,5 @@ A class management system for students to register and manage classes with ease 
 ### Work Distribution
 - Git Master: Vireak Ny (@Vixeln)
 - Database: Vireak Ny (@Vixeln)
-- HTML/CSS//JS: Ethan Garcia (@CaligulaXO)
+- HTML/CSS/JS: Ethan Garcia (@CaligulaXO)
+- Backend: Bahara Mehry (@bmehry25), Luis Buenavista (@lrbuenavista16)

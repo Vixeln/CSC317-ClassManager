@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Class Manager</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="logo">Class Manager</div>
+    <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="search.html">Search Classes</a>
+        <a href="schedule.html">My Schedule</a>
+        <a href="#" id="logoutBtn" class="logout">Logout</a>
+    </nav>
+</header>
+
+<main class="dashboard-container">
+
+    <section class="dashboard-welcome">
+        <h1 id="welcomeName">Welcome, Student!</h1>
+        <p>Your classes and tools are below.</p>
+    </section>
+
+    <section class="dashboard-grid">
+
+        <a href="search.html" class="dash-card">
+            <h2>🔍 Search Classes</h2>
+            <p>Browse available CS courses.</p>
+        </a>
+
+        <a href="schedule.html" class="dash-card">
+            <h2>📅 My Schedule</h2>
+            <p>View the classes you registered for.</p>
+        </a>
+
+        <a href="#" class="dash-card">
+            <h2>🧑‍🏫 Instructor Panel</h2>
+            <p>Create or modify classes (coming soon).</p>
+        </a>
+
+    </section>
+
+</main>
+
+<script src="/public/js/main.js"></script>
+<script src="/middlewares/js/auth.js"></script>
+</body>
+</html>

@@ -6,7 +6,7 @@
  */
 
 require("dotenv").config();
-const Course = require("../models/Courses.js");
+const Course = require("../models/Course.js");
 const { pool } = require("../config/database");
 
 const createTables = async () => {
