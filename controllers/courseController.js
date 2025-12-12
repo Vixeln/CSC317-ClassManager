@@ -3,8 +3,9 @@
  * Handles the logic for the catalog
  */
 
-const Course = require('../models/Course');
-const Term = require('../models/Term');
+const Course = require("../models/Course");
+const Class = require("../models/Class");
+const Term = require("../models/Term");
 
 // View: Shows the HTML page
 exports.getSearchPage = (req, res) => {
@@ -22,6 +23,16 @@ exports.searchClasses = async (req, res) => {
     const termId = activeTerm ? activeTerm.id : 1; 
 
     const results = await Course.search({ subject, time, term: termId });
+    res.json({ success: true, data: results });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+exports.getClasses = async (req, res) => {
+  try {
+    const { page, limit } = req.query;
+    const results = await Class.getClasses(page, limit);
     res.json({ success: true, data: results });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
