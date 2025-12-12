@@ -63,6 +63,7 @@ async function add(newClass) {
     return result.rows[0];
   } catch (error) {
     console.error("Error inserting class: \n", error);
+    throw error;
   }
 }
 
@@ -96,6 +97,7 @@ async function getById(classId) {
     return result.rows[0];
   } catch (error) {
     console.error("Error getting class: \n", error);
+    throw error;
   }
 }
 
