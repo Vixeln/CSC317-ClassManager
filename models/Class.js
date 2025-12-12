@@ -1,0 +1,64 @@
+/**
+ * Class model
+ *
+ * @description An instance of a course. This represents the available sections of a course, what time to meet, where to meet, what section number it is.
+ *
+ * @fileoverview Database operations for class using PostgreSQL
+ * A course is comprised of:
+ * - The class number (also it's primary key)
+ * - The course it represents
+ * - Class meeting start time
+ * - Class meeting end time
+ * - Class meeting days
+ * 	- Represented as an array of texts that could be: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
+ * - Instructor
+ *
+ */
+const { query } = require("../config/database");
+
+/**
+ * The following are type declarations for relevant objects to add clarity. They do not affect the syntax of the code and are only for documentation
+ * 
+ * @typedef {{courseId: number, location: string, startTime: string, endTime: string, daysOfWeek: string[]}} Class
+ * */
+
+/**
+ * @description Attempts to initialize the classes table.
+ *
+ */
+async function createTable() {
+  await query(`
+      CREATE TABLE IF NOT EXISTS classes (
+        id SERIAL PRIMARY KEY,
+				course_id INTEGER REFERENCES courses(id),
+				meeting_location VARCHAR(30),
+				start_time TIME NOT NULL,
+				end_time TIME NOT NULL,
+				days_of_week TEXT[] NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+  `);
+}
+
+/**
+ *
+ * @param {Class} newClass
+ * @returns
+ */
+async function add(newClass) {
+  const { courseId, location, startTime, endTime, daysOfWeek } = newClass;
+
+  try {
+    const result = await query(
+      `INSERT INTO classes (course_id, meeting_location, start_time, end_time, days_of_week)
+			VALUES ($1, $2, $3, $4, $5)
+			RETURNING course_id, meeting_location, start_time, end_time, days_of_week`,
+      [courseId, location, startTime, endTime, daysOfWeek]
+    );
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error inserting class: ", error);
+  }
+}
+
+module.exports = { createTable, add };

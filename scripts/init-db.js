@@ -7,6 +7,7 @@
 
 require("dotenv").config();
 const Course = require("../models/Course.js");
+const Class = require("../models/Class.js");
 const { pool } = require("../config/database");
 
 const createTables = async () => {
@@ -50,15 +51,7 @@ const createTables = async () => {
     console.log("✓ Courses table created");
 
     // Create classes table
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS classes (
-        id SERIAL PRIMARY KEY,
-				course_id INTEGER REFERENCES courses(id),
-				meeting_location VARCHAR(30),
-				start_time TIMESTAMP NOT NULL,
-				end_time TIMESTAMP NOT NULL
-      )
-    `);
+    await Class.createTable();
     console.log("✓ Classes table created");
 
     // Create instructors table
