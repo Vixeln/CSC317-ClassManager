@@ -111,6 +111,7 @@ const createTables = async () => {
  * @type {{subject: string, number: number, credit: number}[]}
  */
 const testCourses = require("../config/test-courses.json").courses;
+  const testClasses = require("../config/test-classes.json").classes;
 
 async function populateTables() {
   // Using for...of loop instead of forEach because we're handling async functions
@@ -119,6 +120,10 @@ async function populateTables() {
       `Attempt to insert ${course.subject} ${course.number} to courses`
     );
 		await Course.createCourse(course);
+  }
+
+	for (const testClass of testClasses.slice(0, 8)) {
+    await Class.add(testClass);
   }
 }
 
