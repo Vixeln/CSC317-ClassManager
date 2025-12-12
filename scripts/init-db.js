@@ -110,14 +110,7 @@ const createTables = async () => {
 /**
  * @type {{subject: string, number: number, credit: number}[]}
  */
-const testCourses = [
-  { subject: "CSC", number: 101, credit: 3 },
-  { subject: "CSC", number: 115, credit: 3 },
-  { subject: "MATH", number: 101, credit: 3 },
-  { subject: "MATH", number: 228, credit: 3 },
-  { subject: "CSC", number: 415, credit: 5 },
-  { subject: "PHYS", number: 230, credit: 3 },
-];
+const testCourses = require("../config/test-courses.json").courses;
 
 async function populateTables() {
   // Using for...of loop instead of forEach because we're handling async functions

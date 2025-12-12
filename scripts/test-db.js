@@ -15,19 +15,16 @@ const { pool } = require("../config/database");
 /**
  * @type {import("../models/Class.js").Class}
  */
-const testClass = {
-  courseId: 1,
-  daysOfWeek: ["Monday", "Tuesday"],
-  startTime: "08:00:00",
-  endTime: "10:00:00",
-  location: "Mars",
-};
 
 async function testDatabase() {
-	console.log("Testing code: \n")
+  const testClasses = require("../config/test-classes.json").classes;
+
+  console.log("Testing code: \n");
   try {
 		// This function could cause an error if the class already exists
+    for (const testClass of testClasses) {
     await Class.add(testClass);
+    }
   } catch (error) {
     console.error("Testing failed:", error);
     process.exit(1);
