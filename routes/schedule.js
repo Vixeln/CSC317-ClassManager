@@ -12,6 +12,8 @@ router.use(isAuthenticated);
 
 router.get('/', scheduleController.getSchedulePage);
 router.get('/api/my-classes', scheduleController.getMyClasses);
+router.post('/api/add', scheduleController.addToSchedule); // add a class with conflict + seat checking 
+router.post('/api/generate', scheduleController.generateSchedules);
 router.post('/api/save', scheduleController.saveSchedule);
 router.post('/api/clear', scheduleController.clearSchedule);
 

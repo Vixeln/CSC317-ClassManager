@@ -40,7 +40,35 @@
     </div>
 </div>
 
-<!-- Changed /assets to /js since server cannot see outside public folder -->
+<!-- generator UI card -->
+    <div class="card" style="background: white; padding: 20px; border-radius: 8px; margin-top: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h2 style="margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+            Schedule Generator
+        </h2>
+
+        <p style="color:#555; margin-bottom: 10px;">
+            Select the courses you’re interested in from the list above, then click the button below to generate possible conflict-free schedules.
+        </p>
+
+        <!-- Button the JS will hook into -->
+        <button id="generateScheduleButton" class="btn primary-btn" type="button" style="padding: 10px 20px; cursor: pointer;">
+            Generate Possible Schedules
+        </button>
+
+        <!-- Where generated schedules will be rendered -->
+        <div id="generatedSchedules" style="margin-top: 20px;"></div>
+    </div>
+</div>
+
+<!-- Existing search logic -->
 <script src="/js/search.js"></script>
 
+<!-- generator logic -->
+<script src="/js/generator.js"></script>
+
 <%- include('../partials/footer') %>
+
+
+
+
+
