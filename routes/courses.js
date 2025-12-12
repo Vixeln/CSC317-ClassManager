@@ -9,5 +9,6 @@ const courseController = require('../controllers/courseController');
 
 router.get('/', courseController.getSearchPage);
 router.get('/api/search', courseController.searchClasses);
+router.get('/api/get-classes', courseController.getClasses);
 
 module.exports = router;

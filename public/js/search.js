@@ -2,9 +2,11 @@
 let classes = [];
 
 //loads classes.json into memory
-fetch("../assets/data/classes.json")
-    .then(res => res.json())
-    .then(data => {
+fetch("courses/api/get-classes")
+  .then((res) => res.json())
+  .then((jsonRes) => {
+    const data = jsonRes.data;
+
         //Some json files use arrays while others may warp, 
         if (Array.isArray(data)) {
             classes = data;
@@ -43,10 +45,14 @@ function renderClassList(list) {
 
         div.innerHTML = `
             <div>
-                <strong>${c.id}</strong> - ${c.professor}<br>
-                ${c.days} | ${to12Hour(c.start)}-${to12Hour(c.end)}<br>
-                Max Seats: ${c.maxSeats}  | Available Seats: ${c.availableSeats}<br>
-                Max WaitList: ${c.maxWait} | Available WaitList Seats: ${c.availableWait}
+                <strong>${c.subject} ${c.number}</strong> - ${
+      c.instructor ?? "TBD"
+    }<br>
+                ${c.days_of_week.join(", ")} | ${to12Hour(
+      c.start_time
+    )}-${to12Hour(c.end_time)}<br>
+                Max Seats: ${c.max_seat ?? "TBD"}<br>
+                Max Wait List: ${c.max_wait ?? "TBD"}
 
             </div>
             <button class="sm-btn" onclick='addToSchedule(${JSON.stringify(c)})'>Add</button>
@@ -98,17 +104,19 @@ function addToSchedule(c) {
     let schedule = JSON.parse(localStorage.getItem("schedule")) || [];
 
     //calls helperfunction to used for checking for overlap
-    const cStart = toMinutes(c.start);
-    const cEnd = toMinutes(c.end);
+  const cStart = toMinutes(c.start_time);
+  const cEnd = toMinutes(c.end_time);
 
     //checking for conflicting overlaps
-    const hasConflict = schedule.some(item => {
+  const hasConflict = schedule.some((item) => {
         //check if they share any days
-        const daysOverlap = [...item.days].some(day => c.days.includes(day));
+    const daysOverlap = [...item.days_of_week].some((day) =>
+      c.days_of_week.includes(day)
+    );
         if (!daysOverlap) return false;
 
-        const itemStart = toMinutes(item.start);
-        const itemEnd = toMinutes(item.end);
+    const itemStart = toMinutes(item.start_time);
+    const itemEnd = toMinutes(item.end_time);
 
         //time overlap checking
         return cStart < itemEnd && itemStart < cEnd;
