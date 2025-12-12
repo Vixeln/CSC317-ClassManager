@@ -1,0 +1,28 @@
+<%- include('../partials/header') %>
+
+<div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h1 class="page-title">My Schedule</h1>
+        
+        <div class="schedule-actions" style="display: flex; gap: 10px;">
+            <button id="clearSchedule" class="btn secondary-btn" style="background-color: #e74c3c; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer;">
+                Clear Schedule
+            </button>
+            <button id="saveSchedule" class="btn primary-btn" style="padding: 10px 15px; cursor: pointer;">
+                Save Changes
+            </button>
+        </div>
+    </div>
+
+    <div class="card" style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); min-height: 300px;">
+        
+        <div id="scheduleGrid" class="schedule-grid">
+            <p style="text-align: center; color: #666; margin-top: 50px;">Loading your schedule...</p>
+        </div>
+        
+    </div>
+</div>
+
+<script src="/js/schedule.js"></script>
+
+<%- include('../partials/footer') %>

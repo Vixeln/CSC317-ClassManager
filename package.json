@@ -1,12 +1,15 @@
 {
   "name": "csc317-project-f25",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A starter template for web applications with user authentication using PostgreSQL",
   "main": "app.js",
+	"type": "commonjs",
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
     "db:init": "node scripts/init-db.js",
+    "db:clean": "node scripts/clean-db.js",
+    "db:test": "node scripts/test-db.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

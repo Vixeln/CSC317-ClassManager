@@ -20,6 +20,9 @@ const pool = new Pool({
 // Log successful connection
 pool.on('connect', () => {
   console.log('Connected to PostgreSQL database');
+	
+	if (process.env.NODE_ENV === 'development')
+		console.log(`Database URL: ${process.env.DATABASE_URL}`)
 });
 
 // Handle pool errors
