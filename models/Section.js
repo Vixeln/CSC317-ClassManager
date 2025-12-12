@@ -5,7 +5,7 @@
 
 const { query } = require('../config/database');
 
-const { query } = require('../config/database');
+
 
 // Find a single section by ID
 const findById = async (id) => {

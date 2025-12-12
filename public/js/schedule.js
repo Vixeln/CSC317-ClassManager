@@ -27,15 +27,52 @@ function clearSchedule() {
     loadSchedule();
 }
 
-/* ==========================================================
-   /// SAVE SCHEDULE (FOR BACKEND)
-   ========================================================== */
-function saveSchedule() {
-    const schedule = JSON.parse(localStorage.getItem("schedule")) || [];
-    console.log("Upload this to backend:", schedule);
-}
+// SAVE SCHEDULE (BACKEND)
+ 
+async function saveSchedule() {
+  const schedule = JSON.parse(localStorage.getItem("schedule")) || [];
 
+  if (schedule.length === 0) {
+    alert("No classes in schedule to save.");
+    return;
+  }
+
+  // IMPORTANT: each item must have a sectionId
+  const sectionIds = [...new Set(
+    schedule
+      .map(c => c.sectionId)   // <-- make sure you set this when adding to localStorage
+      .filter(Boolean)
+  )];
+
+  if (sectionIds.length === 0) {
+    alert("No sectionIds found in schedule items. Make sure you store sectionId with each class.");
+    return;
+  }
+
+  try {
+    const res = await fetch("/schedule/api/save", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ sectionIds })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      alert("Schedule saved to backend!");
+    } else {
+      alert(data.message || "Failed to save schedule.");
+    }
+  } catch (err) {
+    console.error("Error saving schedule:", err);
+    alert("Error saving schedule. Check console for details.");
+  }
+}
+// EVENT LISTENERS
 document.getElementById("clearSchedule").addEventListener("click", clearSchedule);
 document.getElementById("saveSchedule").addEventListener("click", saveSchedule);
 
+// Initial render
 loadSchedule();
