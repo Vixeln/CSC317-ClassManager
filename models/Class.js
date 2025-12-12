@@ -51,7 +51,7 @@ async function createTable() {
  * @returns
  */
 async function add(newClass) {
-  const { courseId, location, startTime, endTime, daysOfWeek } = newClass;
+  const { courseId, location, startTime, endTime, daysOfWeek, maxSeats, maxWait } = newClass;
 
   try {
     const result = await query(
