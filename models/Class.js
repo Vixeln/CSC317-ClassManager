@@ -92,4 +92,32 @@ async function getById(classId) {
   }
 }
 
-module.exports = { createTable, add, getById };
+/**
+ *
+ * @param {string} subject - The subject code (e.g., 'CSC')
+ * @returns {Promise<Array>} List of classes for that subject
+ */
+async function getBySubject(subject) {
+  try {
+    const result = await query(
+      `SELECT 
+        c.id, 
+        c.meeting_location, 
+        c.start_time, 
+        c.end_time, 
+        co.id as course_id,
+        co.subject,
+        co.number,
+        co.credit
+       FROM classes c
+       JOIN courses co ON c.course_id = co.id
+       WHERE co.subject = $1`,
+      [subject]
+    );
+    return result.rows;
+  } catch (error) {
+    console.error("Error getting classes by subject: \n", error);
+  }
+}
+
+module.exports = { createTable, add, getById, getBySubject};
