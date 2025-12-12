@@ -30,7 +30,7 @@ async function createTable() {
   await query(`
       CREATE TABLE IF NOT EXISTS classes (
         id SERIAL PRIMARY KEY,
-				course_id INTEGER REFERENCES courses(id),
+				course_id INTEGER NOT NULL REFERENCES courses(id) ON DELETE CASCADE,
 				meeting_location VARCHAR(30),
 				start_time TIME NOT NULL,
 				end_time TIME NOT NULL,
@@ -57,7 +57,7 @@ async function add(newClass) {
     );
     return result.rows[0];
   } catch (error) {
-    console.error("Error inserting class: ", error);
+    console.error("Error inserting class: \n", error);
   }
 }
 
