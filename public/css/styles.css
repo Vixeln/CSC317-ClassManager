@@ -13,20 +13,25 @@ body {
 }
 
 /* NAVBAR */
+.nav-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.nav-links > li {
+  list-style: none;
+}
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background: #442C8B;
-    color: white;
+  background: #442c8b;
 }
 
 .navbar a {
-    color: white;
-    margin-left: 30px;
-    text-decoration: none;
-    font-weight: bold;
+  color: white;
+  margin-left: 30px;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .logo {
