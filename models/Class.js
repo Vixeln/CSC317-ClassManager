@@ -18,7 +18,9 @@ const { query } = require("../config/database");
 
 /**
  * The following are type declarations for relevant objects to add clarity. They do not affect the syntax of the code and are only for documentation
+ *
  * @typedef {{courseId: number,location: string,startTime: string,endTime: string,daysOfWeek: string[],maxSeats: number,availableSeats: number,maxWait: number,availableWaitList: number}} Class
+ * @typedef {{id: number, meeting_location: string, start_time: string, end_time: string, days_of_week: string[] subject: string, number: number, credit: number}} ClassFE What frontend sees
  * */
 
 /**

@@ -21,6 +21,11 @@ fetch("../assets/data/classes.json")
     .catch(err => console.error("Error Loading classes.json:", err));
 
 //displays all classes onto our search page
+/**
+ *
+ * @param {TClass[]} list
+ * @returns
+ */
 function renderClassList(list) {
     const container = document.getElementById("classList");
     //clrs old results
@@ -80,8 +85,16 @@ document.getElementById("applyFilters").addEventListener("click", applyFilters);
 
 
 //adding a class to schedule <decrements seat/wait availability
+/**
+ *
+ * @typedef {import("../../models/Class.js").ClassFE } TClass
+ *
+ * @param {TClass} c
+ * @returns
+ */
 function addToSchedule(c) {
     //current schedule
+  /** @type {TClass[]} */
     let schedule = JSON.parse(localStorage.getItem("schedule")) || [];
 
     //calls helperfunction to used for checking for overlap
