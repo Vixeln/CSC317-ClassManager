@@ -1,5 +1,5 @@
-// FUTURE BACKEND API TEMPLATE
-// All real fetch calls will be placed here.
+//FUTURE BACKEND API TEMPLATE
+//All real fetch calls will be placed here.
 
 export async function getClasses() {
     return fetch("/api/classes").then(res => res.json());

@@ -1,41 +1,76 @@
-/* ==========================================================
-   /// LOAD SCHEDULE
-   ========================================================== */
+//load and display the current schedule on page
 function loadSchedule() {
     const grid = document.getElementById("scheduleGrid");
+    //meant to clr old contents
     grid.innerHTML = "";
-
+    //pull saved schedule from localStorage
     const schedule = JSON.parse(localStorage.getItem("schedule")) || [];
-
-    schedule.forEach(c => {
+    //loop thru schedule and display each class block
+    schedule.forEach((c, X) => {
         const div = document.createElement("div");
         div.className = "schedule-block";
         div.innerHTML = `
-            <strong>${c.subject}</strong><br>
-            ${c.prof}<br>
-            ${c.days} | ${c.start}-${c.end}
-        `;
+            <strong>${c.subject} | ${c.id}</strong><br>
+            ${c.professor}<br>
+            ${c.days} | ${to12Hour(c.start)}-${to12Hour(c.end)}
+            <button class="sm-btn" onclick="removeFromSchedule(${X})">Remove</button>
+            
+            `;
         grid.appendChild(div);
     });
 }
 
-/* ==========================================================
-   /// CLEAR SCHEDULE
-   ========================================================== */
-function clearSchedule() {
-    localStorage.removeItem("schedule");
-    loadSchedule();
-}
 
-/* ==========================================================
-   /// SAVE SCHEDULE (FOR BACKEND)
-   ========================================================== */
+
+//save schedule (currently a placeholder for a person from backend to code in this functinality)
 function saveSchedule() {
     const schedule = JSON.parse(localStorage.getItem("schedule")) || [];
     console.log("Upload this to backend:", schedule);
 }
 
-document.getElementById("clearSchedule").addEventListener("click", clearSchedule);
+//connects saveSchedule to button
 document.getElementById("saveSchedule").addEventListener("click", saveSchedule);
 
+//automatically loads schedule
 loadSchedule();
+
+//same as in search.js
+function to12Hour(timeString) {
+    let [hour, minute] = timeString.split(":").map(Number);
+    const ampm = hour >= 12 ? "PM" : "AM";
+    hour = hour % 12;
+    if (hour === 0) hour = 12;
+    return `${hour}:${minute.toString().padStart(2, "0")} ${ampm}`;
+}
+
+//removal of a class <includes a way to restore a seat for availablity
+function removeFromSchedule(index) {
+    let schedule = JSON.parse(localStorage.getItem("schedule")) || [];
+    //checks to see if curring index is valid or not
+    if (index < 0 || index >= schedule.length) return;
+    //class that we will remove
+    const c = schedule[index];
+    
+    //update availableSeats / availableWait in classes array
+    //classes must exist in search.js
+    if (typeof classes !== "undefined") { 
+       //finding matching class in list
+        const classIndex = classes.findIndex(cl => cl.id === c.id);
+        if (classIndex !== -1) {
+            //add back whichever seat was used
+            //plan for future implementation: allow the case that if there are students in the wait list to be moved into
+            //the class if a student from availableSeats removes the class. from there increment the subsequent students
+            //in the waitlist up a spot 
+            if (c.enrolledSeat === "seat") classes[classIndex].availableSeats++;
+            else if (c.enrolledSeat === "wait") classes[classIndex].availableWait++;
+        }
+    }
+
+    //Remove from schedule
+    schedule.splice(index, 1);
+    //saves updated schedule
+    localStorage.setItem("schedule", JSON.stringify(schedule));
+    //Refreshes schedule
+    loadSchedule();
+}
+
