@@ -94,7 +94,8 @@ const createTables = async () => {
     `);
     console.log("✓ Indexes created");
 
-    if (process.env.NODE_ENV === "development") await populateTables();
+    if (process.env.INIT_TABLES || process.env.NODE_ENV === "development") await populateTables();
+		
 		// Test finding course subject
     // if (process.env.NODE_ENV === "development") console.log(await Course.findCourseBySubject("MATH"));
 
