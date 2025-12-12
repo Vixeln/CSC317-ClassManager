@@ -63,4 +63,33 @@ async function add(newClass) {
   }
 }
 
-module.exports = { createTable, add };
+/**
+ *
+ * @param {number} classId
+ * @returns {Promise<Class>} The class from the id
+ */
+async function getById(classId) {
+  try {
+    const result = await query(
+      `SELECT 
+        c.id, 
+        c.meeting_location, 
+        c.start_time, 
+        c.end_time, 
+        c.days_of_week,
+        co.id as course_id,
+        co.subject,
+        co.number,
+        co.credit
+       FROM classes c
+       JOIN courses co ON c.course_id = co.id
+       WHERE c.id = $1`,
+      [classId]
+    );
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error getting class: \n", error);
+  }
+}
+
+module.exports = { createTable, add, getById };
