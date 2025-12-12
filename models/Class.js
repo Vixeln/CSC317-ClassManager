@@ -27,6 +27,7 @@ const { query } = require("../config/database");
  *
  */
 async function createTable() {
+	// Note the current set up allows for duplicate classes with the same time and days if the location is null
   await query(`
       CREATE TABLE IF NOT EXISTS classes (
         id SERIAL PRIMARY KEY,
@@ -35,7 +36,8 @@ async function createTable() {
 				start_time TIME NOT NULL,
 				end_time TIME NOT NULL,
 				days_of_week TEXT[] NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+				UNIQUE(course_id, meeting_location, start_time, end_time, days_of_week)
       )
   `);
 }
