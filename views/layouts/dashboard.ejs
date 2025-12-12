@@ -1,0 +1,31 @@
+<%- include('./partials/header') %>
+
+<main class="dashboard-container">
+
+    <section class="dashboard-welcome">
+        <h1 id="welcomeName">Welcome, <%= user.username %>!</h1>
+        <p>Your classes and tools are below.</p>
+    </section>
+
+    <section class="dashboard-grid">
+
+        <a href="/courses" class="dash-card">
+            <h2>🔍 Search Classes</h2>
+            <p>Browse available CS courses.</p>
+        </a>
+
+        <a href="/schedule" class="dash-card">
+            <h2>📅 My Schedule</h2>
+            <p>View the classes you registered for.</p>
+        </a>
+
+        <a href="#" class="dash-card">
+            <h2>🧑‍🏫 Instructor Panel</h2>
+            <p>Create or modify classes (coming soon).</p>
+        </a>
+
+    </section>
+
+</main>
+
+<%- include('./partials/footer') %>

@@ -1,47 +1,32 @@
 <%- include('../partials/header') %>
 
-<div class="container">
-  <div class="auth-form">
-    <h1>Login to Your Account</h1>
-    
+<div class="form-container">
+    <h2>Welcome Back</h2>
+    <p class="form-subtext">Login to access your class tools.</p>
+
     <%- include('../partials/flash-message') %>
     <%- include('../partials/form-errors') %>
-    
-    <form action="/auth/login" method="POST">
-      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-      
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <input 
-          type="email" 
-          id="email" 
-          name="email"
-          value="<%= typeof formData !== 'undefined' ? formData.email || '' : '' %>"
-          placeholder="Enter your email address"
-          required
-        >
-      </div>
-      
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input 
-          type="password" 
-          id="password" 
-          name="password"
-          placeholder="Enter your password"
-          required
-        >
-      </div>
-      
-      <div class="form-actions">
-        <button type="submit" class="btn primary-btn">Login</button>
-      </div>
+
+    <form id="loginForm" action="/auth/login" method="POST">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+        <div class="input-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="example@mail.com" required 
+                   value="<%= typeof formData !== 'undefined' ? formData.email : '' %>">
+        </div>
+
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Your password" required>
+        </div>
+
+        <button type="submit" class="cta-btn" style="width:100%; border:none; cursor:pointer;">Login</button>
     </form>
-    
-    <div class="form-footer">
-      <p>Don't have an account? <a href="/auth/register">Register</a></p>
-    </div>
-  </div>
+
+    <p style="margin-top: 1.5rem; text-align: center;">
+        Don't have an account? <a href="/auth/register">Register here</a>
+    </p>
 </div>
 
 <%- include('../partials/footer') %>
