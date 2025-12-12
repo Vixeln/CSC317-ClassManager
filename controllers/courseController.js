@@ -29,12 +29,17 @@ exports.searchClasses = async (req, res) => {
   }
 };
 
-exports.getClasses = async (req, res) => {
+exports.getAllClasses = async (req, res) => {
   try {
-    const { page, limit } = req.query;
-    const results = await Class.getClasses(page, limit);
+    const activeTerm = await Term.findActive();
+    const termId = activeTerm ? activeTerm.id : 1;
+
+    // Reuse Course.search with no subject/time filters
+    const results = await Course.search({ subject: null, time: null, term: termId });
+
     res.json({ success: true, data: results });
   } catch (error) {
+    console.error('Error in getAllClasses:', error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
