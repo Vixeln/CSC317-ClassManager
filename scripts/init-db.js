@@ -115,7 +115,9 @@ const testCourses = require("../config/test-courses.json").courses;
 async function populateTables() {
   // Using for...of loop instead of forEach because we're handling async functions
   for (const course of testCourses) {
-    console.log(`Attempt to insert ${course.subject} ${course.number} to courses`);
+    console.log(
+      `Attempt to insert ${course.subject} ${course.number} to courses`
+    );
 		await Course.createCourse(course);
   }
 }

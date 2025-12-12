@@ -3,7 +3,7 @@
  *
  * Run this script to test functions/queries on the database.
  * Usage: npm run db:test
- * 
+ *
  * The current file is testing if class insertion works
  */
 
@@ -33,4 +33,4 @@ async function testDatabase() {
   }
 }
 
-testDatabase()
+testDatabase();
