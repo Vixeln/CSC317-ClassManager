@@ -1,6 +1,6 @@
 {
   "name": "csc317-project-f25",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A starter template for web applications with user authentication using PostgreSQL",
   "main": "app.js",
 	"type": "commonjs",
