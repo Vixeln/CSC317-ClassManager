@@ -18,8 +18,7 @@ const { query } = require("../config/database");
 
 /**
  * The following are type declarations for relevant objects to add clarity. They do not affect the syntax of the code and are only for documentation
- * 
- * @typedef {{courseId: number, location: string, startTime: string, endTime: string, daysOfWeek: string[]}} Class
+ * @typedef {{courseId: number,location: string,startTime: string,endTime: string,daysOfWeek: string[],maxSeats: number,availableSeats: number,maxWait: number,availableWaitList: number}} Class
  * */
 
 /**
@@ -36,6 +35,10 @@ async function createTable() {
 				start_time TIME NOT NULL,
 				end_time TIME NOT NULL,
 				days_of_week TEXT[] NOT NULL,
+				max_seat INTEGER,
+				available_seat INTEGER,
+				max_wait_list INTEGER,
+				available_wait_list INTEGER,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 				UNIQUE(course_id, meeting_location, start_time, end_time, days_of_week)
       )
@@ -52,10 +55,10 @@ async function add(newClass) {
 
   try {
     const result = await query(
-      `INSERT INTO classes (course_id, meeting_location, start_time, end_time, days_of_week)
-			VALUES ($1, $2, $3, $4, $5)
-			RETURNING course_id, meeting_location, start_time, end_time, days_of_week`,
-      [courseId, location, startTime, endTime, daysOfWeek]
+      `INSERT INTO classes (course_id, meeting_location, start_time, end_time, days_of_week, max_seat, available_seat, max_wait_list, available_wait_list)
+			VALUES ($1, $2, $3, $4, $5, $6, $6, $7, $7)
+			RETURNING id, course_id, meeting_location, start_time, end_time, days_of_week, max_seat, available_seat, max_wait_list, available_wait_list`,
+      [courseId, location, startTime, endTime, daysOfWeek, maxSeats, maxWait]
     );
     return result.rows[0];
   } catch (error) {
@@ -77,6 +80,10 @@ async function getById(classId) {
         c.start_time, 
         c.end_time, 
         c.days_of_week,
+        c.max_seat,
+        c.available_seat,
+        c.max_wait_list,
+        c.available_wait_list,
         co.id as course_id,
         co.subject,
         co.number,
