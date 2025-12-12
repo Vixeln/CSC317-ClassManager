@@ -28,7 +28,7 @@ const { query } = require("../config/database");
  *
  */
 async function createTable() {
-	// Note the current set up allows for duplicate classes with the same time and days if the location is null
+  // Note the current set up allows for duplicate classes with the same time and days if the location is null
   await query(`
       CREATE TABLE IF NOT EXISTS classes (
         id SERIAL PRIMARY KEY,

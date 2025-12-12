@@ -9,9 +9,9 @@ const Term = require("../models/Term");
 
 // View: Shows the HTML page
 exports.getSearchPage = (req, res) => {
-  res.render('courses/search', { 
-    title: 'Search Classes',
-    user: req.session.user
+  res.render("courses/search", {
+    title: "Search Classes",
+    user: req.session.user,
   });
 };
 
@@ -20,7 +20,7 @@ exports.searchClasses = async (req, res) => {
   try {
     const { subject, time } = req.query;
     const activeTerm = await Term.findActive();
-    const termId = activeTerm ? activeTerm.id : 1; 
+    const termId = activeTerm ? activeTerm.id : 1;
 
     const results = await Course.search({ subject, time, term: termId });
     res.json({ success: true, data: results });
