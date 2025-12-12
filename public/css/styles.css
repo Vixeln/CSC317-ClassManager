@@ -1,6 +1,4 @@
-/* ============================
-   GLOBAL RESET + BASE STYLE
-============================ */
+/*Base Styling*/
 * {
     margin: 0;
     padding: 0;
@@ -14,21 +12,19 @@ body {
     line-height: 1.6;
 }
 
-/* ============================
-   NAVBAR
-============================ */
+/* NAVBAR */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    background: #4B2E83;
+    background: #442C8B;
     color: white;
 }
 
 .navbar a {
     color: white;
-    margin-left: 20px;
+    margin-left: 30px;
     text-decoration: none;
     font-weight: bold;
 }
@@ -36,31 +32,21 @@ body {
 .logo {
     font-size: 1.6rem;
     font-weight: bold;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .btn {
-    background: #F5A623;
-    border: 2px solid rgb(0, 0, 0);
+    background: #DCAE27;
+    border: 1px solid rgb(0, 0, 0);
     padding: 0.5rem 1rem;
-    border-radius: 8px;
+    border-radius: 10px;
     color: white;
     text-decoration: none;
     font-weight: bold;
 }
 
-.btn-outline {
-    background: #F5A623;
-    border: 2px solid rgb(0, 0, 0);
-    padding: 0.45rem 1rem;
-    border-radius: 8px;
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
 
-/* ============================
-   HOME HERO
-============================ */
+/* HOME HERO */
 .hero {
     text-align: center;
     padding: 6rem 2rem;
@@ -74,7 +60,7 @@ body {
 }
 
 .cta-btn {
-    background: #4B2E83;
+    background: #442C8B;
     color: white;
     padding: 0.8rem 2rem;
     border-radius: 10px;
@@ -84,30 +70,25 @@ body {
     margin-top: 1rem;
 }
 
-/* ============================
-   FEATURES
-============================ */
+/* FEATURES */
 .features {
-    margin: 3rem auto;
-    width: 90%;
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-rows: repeat(3, minmax(100px, auto));
     gap: 2rem;
-    flex-wrap: wrap;
 }
 
 .feature-card {
     background: white;
     padding: 2rem;
-    width: 260px;
     border-radius: 16px;
     text-align: center;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+    text-decoration: none;
+    color: #1A1A1A;
+    transition: transform 0.2s;
 }
 
-/* ============================
-   FORMS (login, register)
-============================ */
+/* FORMS (login, register) */
 .form-container {
     background: white;
     width: 90%;
@@ -141,9 +122,7 @@ body {
     margin-bottom: 10px;
 }
 
-/* ============================
-   DASHBOARD PAGE
-============================ */
+/* DASHBOARD PAGE */
 .dashboard-container {
     width: 90%;
     max-width: 1100px;
@@ -154,7 +133,7 @@ body {
 
 .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-rows: repeat(3, minmax(100px, auto));
     gap: 2rem;
 }
 
@@ -173,9 +152,7 @@ body {
     transform: translateY(-5px);
 }
 
-/* ============================
-   SCHEDULE GRID (weekly)
-============================ */
+/* SCHEDULE GRID (weekly) */
 .schedule-grid {
     width: 95%;
     max-width: 1000px;
@@ -202,9 +179,7 @@ body {
     font-weight: bold;
 }
 
-/* ============================
-   COURSE SEARCH PAGE
-============================ */
+/* COURSE SEARCH PAGE */
 .search-container {
     width: 90%;
     max-width: 800px;
@@ -238,43 +213,7 @@ body {
 
 
 
-
-
-
-
-
-/* ---------------------------------------------------
-   GLOBAL RESET + BASE COLORS
---------------------------------------------------- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-:root {
-    --bg: #f4f6f9;
-    --card-bg: #ffffff;
-    --border: #dcdfe6;
-    --text: #333;
-    --text-light: #666;
-    --primary: #4A90E2;
-    --primary-dark: #357ABD;
-    --navbar-bg: #2c3e50;
-    --navbar-text: #ecf0f1;
-}
-
-body {
-    background: var(--bg);
-    color: var(--text);
-}
-
-
-
-/* ---------------------------------------------------
-   PAGE STRUCTURE
---------------------------------------------------- */
+/* PAGE STRUCTURE */
 .container {
     max-width: 900px;
     margin: 25px auto;
@@ -287,9 +226,7 @@ body {
     color: var(--text);
 }
 
-/* ---------------------------------------------------
-   CARDS
---------------------------------------------------- */
+/* CARDS */
 .card {
     background: var(--card-bg);
     border-radius: 10px;
@@ -299,9 +236,7 @@ body {
     box-shadow: 0 3px 6px rgba(0,0,0,0.07);
 }
 
-/* ---------------------------------------------------
-   FILTER BAR
---------------------------------------------------- */
+/* FILTER BAR */
 .filters {
     display: flex;
     gap: 15px;
@@ -316,9 +251,7 @@ body {
     color: var(--text);
 }
 
-/* ---------------------------------------------------
-   CLASS LIST RESULTS
---------------------------------------------------- */
+/* CLASS LIST RESULTS */
 #classList .class-item {
     border: 1px solid var(--border);
     border-radius: 8px;
