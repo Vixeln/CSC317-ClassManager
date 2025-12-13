@@ -49,10 +49,10 @@ async function findCourseBySubject(subject) {
   }
 }
 
-const search = async ({ subject, time, term }) => {
+const search = async ({ subject, time}) => {
   let sql = `
     SELECT 
-      c.id, c.code, c.title, c.credits, c.description,
+      c.id, c.subject, c.title, c.credits, c.description,
       s.id as section_id, s.instructor, s.open_seats, s.total_seats,
       m.day, m.start_time, m.end_time, m.location
     FROM courses c

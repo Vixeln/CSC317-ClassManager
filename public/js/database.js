@@ -7,7 +7,11 @@ export const classes = [
         days: ["Mon", "Wed"],
         start: "09:00",
         end: "10:15",
-        credits: 4
+        credits: 4,
+        maxSeats: 20,
+        availableSeats: 20,
+        maxWait: 5,
+        availableWait: 5
     },
     {
         id: "SCI002",
@@ -16,7 +20,11 @@ export const classes = [
         days: ["Mon", "Wed", "Fri"],
         start: "10:00",
         end: "10:30",
-        credits: 4
+        credits: 4,
+        maxSeats: 40,
+        availableSeats: 30,
+        maxWait: 5,
+        availableWait: 5
     },
     {
         id: "SCI003",
@@ -25,7 +33,77 @@ export const classes = [
         days: ["Tue", "Thu"],
         start: "10:00",
         end: "11:45",
-        credits: 4
+        credits: 4,
+        maxSeats: 20,
+        availableSeats: 5,
+        maxWait: 5,
+        availableWait: 5
+
+    }, 
+    {
+        id: "SCI004",
+        professor: "Mr.Decker",
+        subject: "SCI",
+        days: ["Tue", "Thu"],
+        start: "12:30",
+        end: "13:45",
+        credits: 3,
+        maxSeats: 30,
+        availableSeats: 10,
+        maxWait: 5,
+        availableWait: 5
+    },
+    {
+        id: "SCI005",
+        professor: "Ms.Zucker",
+        subject: "SCI",
+        days: ["Tue", "Thu"],
+        start: "14:00",
+        end: "15:15",
+        credits: 3,
+        maxSeats: 30,
+        availableSeats: 13,
+        maxWait: 5,
+        availableWait: 5
+    },
+    {
+        id: "SCI006",
+        professor: "Mr.Green",
+        subject: "SCI",
+        days: ["Fri"],
+        start: "09:30",
+        end: "12:15",
+        credits: 4,
+        maxSeats: 30,
+        availableSeats: 12,
+        maxWait: 5,
+        availableWait: 5
+    },
+    {
+        id: "SCI007",
+        professor: "Ms.Adewunmi",
+        subject: "SCI",
+        days: ["Fri"],
+        start: "09:30",
+        end: "12:15",
+        credits: 4,
+        maxSeats: 30,
+        availableSeats: 4,
+        maxWait: 5,
+        availableWait: 5
+    },
+    {
+        id: "SCI008",
+        professor: "Ms.Sera",
+        subject: "SCI",
+        days: ["Fri"],
+        start: "12:30",
+        end: "15:15",
+        credits: 4,
+        maxSeats: 20,
+        availableSeats: 10,
+        maxWait: 5,
+        availableWait: 5
     },
 
     // --- MATH ---
@@ -36,7 +114,11 @@ export const classes = [
         days: ["Tue", "Thu"],
         start: "11:00",
         end: "12:15",
-        credits: 4
+        credits: 4,
+        maxSeats: 20,
+        availableSeats: 5,
+        maxWait: 5,
+        availableWait: 5
     },
     {
         id: "MATH002",
@@ -45,7 +127,11 @@ export const classes = [
         days: ["Tue", "Thu"],
         start: "12:00",
         end: "13:00",
-        credits: 4
+        credits: 4,
+        maxSeats: 25,
+        availableSeats: 0,
+        maxWait: 5,
+        availableWait: 3
     },
     {
         id: "MATH003",
@@ -54,8 +140,78 @@ export const classes = [
         days: ["Mon", "Wed"],
         start: "09:00",
         end: "10:15",
-        credits: 4
+        credits: 4,
+        maxSeats: 20,
+        availableSeats: 4,
+        maxWait: 5,
+        availableWait: 5
     },
+    {
+        id: "MATH004",
+        professor: "Mr.Alvarez",
+        subject: "MATH",
+        days: ["Tue", "Thu"],
+        start: "12:00",
+        end: "13:00",
+        credits: 1,
+        maxSeats: 25,
+        availableSeats: 0,
+        maxWait: 5,
+        availableWait: 1
+    },
+    {
+        id: "MATH005",
+        professor: "Ms.Venegas",
+        subject: "MATH",
+        days: ["Tue", "Thu"],
+        start: "12:30",
+        end: "13:45",
+        credits: 2,
+        maxSeats: 30,
+        availableSeats: 20,
+        maxWait: 5,
+        availableWait: 5
+    },
+    {
+        id: "MATH006",
+        professor: "Ms.Jeanne",
+        subject: "MATH",
+        days: ["Mon", "Wed"],
+        start: "16:00",
+        end: "18:45",
+        credits: 4,
+        maxSeats: 30,
+        availableSeats: 0,
+        maxWait: 5,
+        availableWait: 4
+    },
+    {
+        id: "MATH007",
+        professor: "Mr.Davids",
+        subject: "MATH",
+        days: ["Tue", "Thu"],
+        start: "17:00",
+        end: "17:50",
+        credits: 2,
+        maxSeats: 30,
+        availableSeats: 0,
+        maxWait: 5,
+        availableWait: 2
+    },
+    {
+        id: "MATH008",
+        professor: "Mr.Reyes",
+        subject: "MATH",
+        days: ["Fri"],
+        start: "16:00",
+        end: "18:45",
+        credits: 4,
+        maxSeats: 35,
+        availableSeats: 30,
+        maxWait: 5,
+        availableWait: 5
+    },
+    
 
     // --- ENGL ---
     {
@@ -65,7 +221,11 @@ export const classes = [
         days: ["Tue", "Thu"],
         start: "11:00",
         end: "12:15",
-        credits: 4
+        credits: 4,
+        maxSeats: 30,
+        availableSeats: 15,
+        maxWait: 5,
+        availableWait: 5
     },
     {
         id: "ENGL002",
@@ -74,7 +234,11 @@ export const classes = [
         days: ["Tue", "Thu"],
         start: "10:00",
         end: "11:45",
-        credits: 4
+        credits: 4,
+        maxSeats: 35,
+        availableSeats: 35,
+        maxWait: 5,
+        availableWait: 5
     },
     {
         id: "ENGL003",
@@ -83,7 +247,76 @@ export const classes = [
         days: ["Tue", "Thu"],
         start: "12:00",
         end: "13:00",
-        credits: 4
+        credits: 4,
+        maxSeats: 15,
+        availableSeats: 3,
+        maxWait: 5,
+        availableWait: 5
+    },
+    {
+        id: "ENGL004",
+        professor: "Ms.Johnson",
+        subject: "ENGL",
+        days: ["Mon", "Wed"],
+        start: "15:30",
+        end: "16:45",
+        credits: 3,
+        maxSeats: 30,
+        availableSeats: 3,
+        maxWait: 5,
+        availableWait: 5
+    },
+    {
+        id: "ENGL005",
+        professor: "Mr.Jackson",
+        subject: "ENGL",
+        days: ["Tue", "Thu"],
+        start: "12:30",
+        end: "13:45",
+        credits: 1,
+        maxSeats: 35,
+        availableSeats: 21,
+        maxWait: 5,
+        availableWait: 5
+    },
+    {
+        id: "ENGL006",
+        professor: "Ms.Jackson",
+        subject: "ENGL",
+        days: ["Fri"],
+        start: "09:30",
+        end: "12:15",
+        credits: 3,
+        maxSeats: 30,
+        availableSeats: 9,
+        maxWait: 5,
+        availableWait: 5
+    },
+    {
+        id: "ENGL007",
+        professor: "Ms.Wolf",
+        subject: "ENGL",
+        days: ["Tue", "Thu"],
+        start: "14:00",
+        end: "15:15",
+        credits: 2,
+        maxSeats: 25,
+        availableSeats: 20,
+        maxWait: 5,
+        availableWait: 5
+    },
+    {
+        id: "ENGL008",
+        professor: "Ms.Homme",
+        subject: "ENGL",
+        days: ["Fri"],
+        start: "15:30",
+        end: "18:15",
+        credits: 4,
+        maxSeats: 50,
+        availableSeats: 41,
+        maxWait: 5,
+        availableWait: 5
     },
 
     // --- HIST ---
@@ -94,7 +327,11 @@ export const classes = [
         days: ["Mon", "Wed"],
         start: "09:00",
         end: "10:15",
-        credits: 4
+        credits: 4,
+        maxSeats: 15,
+        availableSeats: 15,
+        maxWait: 5,
+        availableWait: 5
     },
     {
         id: "HIST002",
@@ -103,7 +340,11 @@ export const classes = [
         days: ["Mon", "Wed", "Fri"],
         start: "10:00",
         end: "10:30",
-        credits: 4
+        credits: 4,
+        maxSeats: 20,
+        availableSeats: 15,
+        maxWait: 5,
+        availableWait: 5
     },
     {
         id: "HIST003",
@@ -112,6 +353,75 @@ export const classes = [
         days: ["Tue", "Thu"],
         start: "12:00",
         end: "13:00",
-        credits: 4
-    }
+        credits: 4,
+        maxSeats: 25,
+        availableSeats: 20,
+        maxWait: 5,
+        availableWait: 5
+    },
+    {
+        id: "HIST004",
+        professor: "Ms.Ortiz",
+        subject: "HIST",
+        days: ["Tue", "Thu"],
+        start: "12:30",
+        end: "13:45",
+        credits: 2,
+        maxSeats: 20,
+        availableSeats: 14,
+        maxWait: 5,
+        availableWait: 5
+    },
+    {
+        id: "HIST005",
+        professor: "Mr.Castro",
+        subject: "HIST",
+        days: ["Tue", "Thu"],
+        start: "18:00",
+        end: "19:15",
+        credits: 3,
+        maxSeats: 20,
+        availableSeats: 0,
+        maxWait: 5,
+        availableWait: 3
+    },
+    {
+        id: "HIST006",
+        professor: "Mr.DeMonte",
+        subject: "HIST",
+        days: ["Tue", "Thu"],
+        start: "20:00",
+        end: "22:00",
+        credits: 2,
+        maxSeats: 30,
+        availableSeats: 29,
+        maxWait: 5,
+        availableWait: 5
+    },
+    {
+        id: "HIST007",
+        professor: "Mr.Fung",
+        subject: "HIST",
+        days: ["Fri"],
+        start: "16:15",
+        end: "17:30",
+        credits: 2,
+        maxSeats: 30,
+        availableSeats: 19,
+        maxWait: 5,
+        availableWait: 5
+    },
+    {
+        id: "HIST008",
+        professor: "Ms.Hampe",
+        subject: "HIST",
+        days: ["Fri"],
+        start: "18:30",
+        end: "21:15",
+        credits: 1,
+        maxSeats: 25,
+        availableSeats: 1,
+        maxWait: 5,
+        availableWait: 5
+}
 ];

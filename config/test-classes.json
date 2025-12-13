@@ -5,7 +5,11 @@
       "daysOfWeek": ["Monday", "Tuesday"],
       "startTime": "08:00:00",
       "endTime": "10:00:00",
-      "location": "Mars"
+      "location": "Mars",
+      "maxSeats": 20,
+      "availableSeats": 20,
+      "maxWait": 5,
+      "availableWait": 5
     },
     {
       "courseId": 1,
