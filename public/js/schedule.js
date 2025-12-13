@@ -14,11 +14,13 @@ function loadSchedule() {
         const div = document.createElement("div");
         div.className = "schedule-block";
         div.innerHTML = `
+				<div>
             <strong>${classItem.subject} | ${classItem.number}</strong><br>
             Instructor: ${classItem.instructor ?? "TBD"}<br>
             Meeting Time: ${classItem.days_of_week.join(", ")} | ${to12Hour(
       classItem.start_time
     )}-${to12Hour(classItem.end_time)}
+		<div>
             <button class="btn" onclick="removeFromSchedule(${index})">Remove</button>
             
             `;
