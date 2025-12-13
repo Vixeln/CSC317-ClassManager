@@ -4,15 +4,131 @@
 <!-- Changed static nav bar to use provided nav bar in header.js  -->
 <%- include('../partials/header') %>
 
+
+    <!--  Checkbox list -->
+    <div id="classCheckboxList" style="display: flex; flex-direction: column; gap: 12px;">
+
+        <% if (classes && classes.length > 0) { %>
+
+            <% classes.forEach(function(c) { %>
+
+                <label style="
+                    padding: 12px;
+                    border: 1px solid #ddd;
+                    border-radius: 6px;
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    cursor: pointer;
+                    background: #fafafa;
+                ">
+
+                    <!-- Checkbox -->
+                    <input type="checkbox"
+                           class="class-pref-checkbox"
+                           data-class-id="<%= c.id %>"
+                           data-course-id="<%= c.course_id %>"
+                           style="transform: scale(1.2); cursor: pointer;">
+
+                    <!-- Class information -->
+                    <div>
+                        <strong><%= c.subject %> <%= c.number %></strong>
+
+                        <div style="color:#555; font-size: 0.9em;">
+                            <%= c.meeting_location || "TBA" %> |
+                            (<%= (c.days_of_week || []).join(", ") %>) |
+                            <%= c.start_time ? c.start_time.slice(0,5) : "--:--" %> -
+                            <%= c.end_time ? c.end_time.slice(0,5) : "--:--" %>
+                        </div>
+
+                        <div style="color:#777; font-size: 0.8em;">
+                            Seats: <%= c.available_seat %> / <%= c.max_seat %>
+                        </div>
+                    </div>
+
+                </label>
+
+            <% }) %>
+
+        <% } else { %>
+
+            
+
+        <% } %>
+
+    </div>
+
+</div>
+
+
 <div class="container">
     <h1 class="page-title">Search Classes</h1>
 
-    <div class="card filters" style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-            
-            <select id="filterSubject" style="padding: 10px; border-radius: 4px; border: 1px solid #ddd; flex: 1;">
-                <option value="">All Subjects</option>
-                <option value="CSC">Computer Science (CSC)</option>
+    <!--  Give section an ID for scrolling -->
+<div id="available-classes">
+
+    <p style="color: #666; font-style: italic; margin-bottom: 12px;">
+        Select the classes you prefer for schedule generation.
+    </p>
+
+    <!--  Checkbox list -->
+    <div id="classCheckboxList" style="display: flex; flex-direction: column; gap: 12px;">
+
+        <% if (classes && classes.length > 0) { %>
+
+            <% classes.forEach(function(c) { %>
+
+                <label style="
+                    padding: 12px;
+                    border: 1px solid #ddd;
+                    border-radius: 6px;
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    cursor: pointer;
+                    background: #fafafa;
+                ">
+
+                    <!-- Checkbox -->
+                    <input type="checkbox"
+                           class="class-pref-checkbox"
+                           data-class-id="<%= c.id %>"
+                           data-course-id="<%= c.course_id %>"
+                           style="transform: scale(1.2); cursor: pointer;">
+
+                    <!--  Class information -->
+                    <div>
+                        <strong><%= c.subject %> <%= c.number %></strong>
+
+                        <div style="color:#555; font-size: 0.9em;">
+                            <%= c.meeting_location || "TBA" %> |
+                            (<%= (c.days_of_week || []).join(", ") %>) |
+                            <%= c.start_time ? c.start_time.slice(0,5) : "--:--" %> -
+                            <%= c.end_time ? c.end_time.slice(0,5) : "--:--" %>
+                        </div>
+
+                        <div style="color:#777; font-size: 0.8em;">
+                            Seats: <%= c.available_seat %> / <%= c.max_seat %>
+                        </div>
+                    </div>
+
+                </label>
+
+            <% }) %>
+
+        <% } else { %>
+
+            <p style="color: #999;">No classes found in the database.</p>
+
+        <% } %>
+
+    </div>
+
+</div>
+
+    
+
+               <!-- <option value="CSC">Computer Science (CSC)</option>
                 <option value="MATH">Mathematics (MATH)</option>
                 <option value="ENGL">English (ENGL)</option>
                 <option value="HIST">History (HIST)</option>
@@ -23,9 +139,9 @@
                 <option value="morning">Morning (Before 12pm)</option>
                 <option value="afternoon">Afternoon (12pm - 5pm)</option>
                 <option value="evening">Evening (After 5pm)</option>
-            </select>
+            </select>. -->
 
-            <button 
+         <!--  <button 
                 id="applyFilters" 
                 type="button" 
                 class="btn primary-btn"
@@ -34,16 +150,10 @@
                 
             </button>
         </div>
-    </div>
-
-    <div class="card" style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-        <h2 style="margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">Available Classes</h2>
-        
-        <div id="classList">
-            <p style="color: #666; font-style: italic;">Select a subject or time above and click "Apply Filters" to see classes.</p>
-        </div>
-    </div>
-</div>
+    </div>. <!-->
+<!--Give Schedule Generator section an ID-->
+   
+    
 
 <!-- generator UI card -->
     <div class="card" style="background: white; padding: 20px; border-radius: 8px; margin-top: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
@@ -70,6 +180,10 @@
 
 <!-- generator logic -->
 <script src="/js/generator.js"></script>
+
+
+
+
 
 <%- include('../partials/footer') %>
 

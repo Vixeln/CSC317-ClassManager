@@ -2,10 +2,14 @@
  * Schedule Controller
  * Handles the user's personal schedule actions
  */
+//const ClassModel = require('../models/Class');
+
 const Section = require('../models/Section');
 const { query } = require('../config/database');
 const Registration = require('../models/Registration');
 const Term = require('../models/Term'); 
+
+
 //BEGIN NEW HELPER FUNCTIONS 
 const getMeetingsForSection = async (sectionId) => {
   const sql = `
@@ -28,62 +32,84 @@ const findTimeConflict = (existingMeetings, newMeetings) => {
   }
   return { conflict: false };
 };
-// Load all sections (with meetings) for a list of course codes in a given term
-const getSectionsForCourses = async (courseCodes, termId) => {
-  const sql = `
-    SELECT 
-      c.code,
-      s.id AS section_id,
-      s.instructor,
-      m.day,
-      m.start_time,
-      m.end_time,
-      m.location
-    FROM courses c
-    JOIN sections s ON c.id = s.course_id
-    LEFT JOIN meetings m ON s.id = m.section_id
-    WHERE c.code = ANY($1)
-      AND ($2::INT IS NULL OR s.term_id = $2)
-    ORDER BY c.code, s.id, m.day, m.start_time
-  `;
+// HELPERS for classes-based schedule generation
+//  normalize Postgres text[] (days_of_week) into a JS array
+function normalizeDays(days) {
+  if (!days) return [];
+  if (Array.isArray(days)) return days;
+  if (typeof days === 'string') {
+    return days
+      .replace(/[{}]/g, '') // remove { }
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean);
+  }
+  return [];
+}
+// convert "HH:MM:SS" → minutes since midnight
+function timeToMinutes(t) {
+  if (!t) return null;
+  const [h, m, s] = t.split(':').map(Number);
+  return h * 60 + m;
+}
 
-  const result = await query(sql, [courseCodes, termId || null]);
-  const rows = result.rows;
+//check if two CLASS ROWS from `classes` conflict
+function classConflict(a, b) {
+  const daysA = normalizeDays(a.days_of_week);
+  const daysB = normalizeDays(b.days_of_week);
 
-  // Group by course code and section
-  const courseMap = new Map();
+  const daySet = new Set(daysA);
+  const sharedDay = daysB.some((d) => daySet.has(d));
+  if (!sharedDay) return false;
 
-  for (const row of rows) {
-    if (!courseMap.has(row.code)) {
-      courseMap.set(row.code, {
-        courseCode: row.code,
-        sections: []
-      });
-    }
-    const course = courseMap.get(row.code);
+  const aStart = timeToMinutes(a.start_time);
+  const aEnd   = timeToMinutes(a.end_time);
+  const bStart = timeToMinutes(b.start_time);
+  const bEnd   = timeToMinutes(b.end_time);
 
-    let section = course.sections.find(sec => sec.sectionId === row.section_id);
-    if (!section) {
-      section = {
-        sectionId: row.section_id,
-        instructor: row.instructor,
-        meetings: []
-      };
-      course.sections.push(section);
-    }
-
-    if (row.day) {
-      section.meetings.push({
-        day: row.day,
-        start_time: row.start_time,
-        end_time: row.end_time,
-        location: row.location
-      });
-    }
+  if (aStart == null || aEnd == null || bStart == null || bEnd == null) {
+    return false;
   }
 
-  return Array.from(courseMap.values());
-};
+  // Overlap if NOT (one ends before the other starts)
+  return !(aEnd <= bStart || bEnd <= aStart);
+}
+ 
+// load classes (with course info) for a set of course IDs
+async function getClassesForCourses(courseIds = []) {
+  let sql = `
+    SELECT 
+      c.id AS class_id,
+      c.meeting_location,
+      c.start_time,
+      c.end_time,
+      c.days_of_week,
+      c.max_seat,
+      c.available_seat,
+      c.max_wait_list,
+      c.available_wait_list,
+      co.id      AS course_id,
+      co.subject,
+      co.number,
+      co.credit
+    FROM classes c
+    JOIN courses co ON c.course_id = co.id
+  `;
+
+  const params = [];
+
+  if (Array.isArray(courseIds) && courseIds.length > 0) {
+    const placeholders = courseIds.map((_, i) => `$${i + 1}`).join(', ');
+    sql += ` WHERE co.id IN (${placeholders})`;
+    params.push(...courseIds);
+  }
+
+  sql += ` ORDER BY co.subject, co.number, c.start_time`;
+
+  const result = await query(sql, params);
+  return result.rows;
+}
+
 
 
 // View
@@ -169,107 +195,106 @@ exports.addToSchedule = async (req, res) => {
 //   }
 exports.generateSchedules = async (req, res) => {
   try {
-    const userId = req.session.user.id; // unused now, but available if needed
-    let { courseCodes, termId } = req.body;
+    const userId = req.session.user?.id; // unused now, but available if needed
+    const { courseIds } = req.body || {};
 
-    // Basic validation
-    if (!Array.isArray(courseCodes) || courseCodes.length === 0) {
+    if (!Array.isArray(courseIds) || courseIds.length === 0) {
       return res.status(400).json({
         success: false,
-        message: 'courseCodes must be a non-empty array (e.g., ["CSC317", "MATH221"]).'
+        message: 'courseIds must be a non-empty array of numeric IDs (e.g., [1,2,3]).'
       });
     }
 
-    // If termId not provided, use the active term
-    if (!termId) {
-      const active = await Term.findActive();
-      if (!active) {
-        return res.status(400).json({
-          success: false,
-          message: 'No active term found and no termId provided.'
-        });
-      }
-      termId = active.id;
-    }
+    //  convert to numbers safely
+    const numericIds = courseIds
+      .map((n) => Number(n))
+      .filter((n) => !Number.isNaN(n));
 
-    // Load sections for given course codes
-    const courseData = await getSectionsForCourses(courseCodes, termId);
+    // now using correct class loader
+    const classes = await getClassesForCourses(numericIds);
 
-    // Figure out which requested codes had no sections
-    const foundCodes = new Set(courseData.map(c => c.courseCode));
-    const missing = courseCodes.filter(code => !foundCodes.has(code));
-
-    if (courseData.length === 0) {
+    if (!classes || classes.length === 0) {
       return res.status(404).json({
         success: false,
-        message: 'No sections found for the selected courses in this term.',
-        missingCourses: missing
+        message: 'No classes found for the selected courses.'
       });
     }
 
-    // Sort courses by number of sections (optimization: fewer branches first)
-    courseData.sort((a, b) => a.sections.length - b.sections.length);
+    // properly group by course_id
+    const byCourse = new Map();
+    for (const row of classes) {
+      if (!byCourse.has(row.course_id)) {
+        byCourse.set(row.course_id, []);
+      }
+      byCourse.get(row.course_id).push(row);
+    }
+
+    // correctly detect missing input courseIds
+    const foundCourseIds = new Set([...byCourse.keys()]);
+    const missingCourses = numericIds.filter((id) => !foundCourseIds.has(id));
+
+    // generate list of course IDs (not sections!)
+    const courseIdList = [...byCourse.keys()];
+
+    //  sort courses with fewest options first
+    courseIdList.sort((a, b) => byCourse.get(a).length - byCourse.get(b).length);
 
     const MAX_SCHEDULES = 20;
     const schedules = [];
 
-    const backtrack = (courseIndex, chosenSections, chosenMeetings) => {
-      if (schedules.length >= MAX_SCHEDULES) return; // limit results
+    // rewritten backtracking using CLASS CONFLICT logic
+    function backtrack(idx, chosen) {
+      if (schedules.length >= MAX_SCHEDULES) return;
 
-      if (courseIndex === courseData.length) {
-        // We picked one section per course, no conflicts
-        schedules.push([...chosenSections]);
+      //  stopping condition uses courseIdList.length (NOT courseData)
+      if (idx === courseIdList.length) {
+        schedules.push([...chosen]);
         return;
       }
 
-      const course = courseData[courseIndex];
+      const courseId = courseIdList[idx];
+      const options = byCourse.get(courseId) || [];
 
-      // If this course has no sections, skip it
-      if (!course.sections || course.sections.length === 0) {
-        backtrack(courseIndex + 1, chosenSections, chosenMeetings);
-        return;
-      }
+      for (const candidate of options) {
+        let ok = true;
 
-      for (const section of course.sections) {
-        const conflictInfo = findTimeConflict(chosenMeetings, section.meetings);
-        if (conflictInfo.conflict) {
-          continue; // skip conflicting section
+        // use classConflict() instead of findTimeConflict()
+        for (const already of chosen) {
+          if (classConflict(candidate, already)) {
+            ok = false;
+            break;
+          }
         }
 
-        backtrack(
-          courseIndex + 1,
-          [
-            ...chosenSections,
-            {
-              courseCode: course.courseCode,
-              sectionId: section.sectionId,
-              instructor: section.instructor,
-              meetings: section.meetings
-            }
-          ],
-          [...chosenMeetings, ...section.meetings]
-        );
-      }
-    };
+        if (!ok) continue;
 
-    backtrack(0, [], []);
+        chosen.push(candidate);
+        backtrack(idx + 1, chosen);
+        chosen.pop();
+      }
+    }
+
+    // correct starting call
+    backtrack(0, []);
 
     if (schedules.length === 0) {
       return res.status(200).json({
         success: true,
         message: 'No conflict-free schedules found for the selected courses.',
         schedules: [],
-        missingCourses: missing
+        missingCourses
       });
     }
 
+    //  final response
     res.json({
       success: true,
       message: 'Generated schedule options.',
       schedules,
-      missingCourses: missing,
+      missingCourses,
       truncated: schedules.length >= MAX_SCHEDULES
     });
+
   } catch (err) {
     console.error('Error generating schedules:', err);
     res.status(500).json({
@@ -279,8 +304,6 @@ exports.generateSchedules = async (req, res) => {
     });
   }
 };
-
-
 
 exports.saveSchedule = async (req, res) => {
   try {

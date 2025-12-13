@@ -1,3 +1,9 @@
+function getSelectedClassIds() {
+    return [...document.querySelectorAll('.class-pref-checkbox:checked')]
+        .map(cb => Number(cb.dataset.classId));
+}
+
+
 // Get selected courses
 function getSelectedCoursesFromUI() {
   const boxes = document.querySelectorAll('.course-select:checked');

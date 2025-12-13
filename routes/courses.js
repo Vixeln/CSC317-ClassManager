@@ -10,6 +10,6 @@ const courseController = require('../controllers/courseController');
 router.get('/', courseController.getSearchPage);
 router.get('/api/search', courseController.searchClasses);
 
-router.get('/api/get-classes', courseController.getAllClasses);
+router.get('/api/classes', courseController.listAllClasses);
 
 module.exports = router;
