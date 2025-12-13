@@ -47,10 +47,88 @@ footer {
 
 .navbar a {
   color: white;
-  margin-left: 30px;
+
   text-decoration: none;
   font-weight: bold;
 }
+
+/* Navbar Hamburger */
+
+.nav-links > #hamburger-control {
+  display: none;
+}
+
+@media (width < 750px) {
+  .nav-links {
+    flex-direction: column;
+    flex-basis: 2in;
+    gap: 0;
+    align-items: end;
+
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    padding: 0;
+
+    height: 100vh;
+  }
+
+  .nav-links > #hamburger-control {
+    display: block;
+
+    appearance: none;
+
+    background-color: #dcae27;
+    background-image: url("/assets/hamburger.svg");
+    background-origin: content-box;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    width: 0.6in;
+    height: 0.6in;
+    padding: 0.2in;
+    margin: 1rem;
+
+		border-radius: 0.5rem;
+
+    flex-shrink: 0;
+  }
+
+  .nav-links > #hamburger-control:checked {
+    background-image: url("/assets/close.svg");
+  }
+
+  .nav-links > #hamburger-control ~ * {
+		display: block;
+    background-color: #442c8b;
+    flex: 1;
+
+    position: relative;
+    width: 100vw;
+    min-height: 0.5in;
+    right: -100vw;
+
+    font-size: 0.3in;
+    align-self: normal;
+
+		transition-property: right, display;
+		/* transition-behavior: allow-discrete; */
+		transition-duration: 0.07s;
+		transition-timing-function: ease-in;
+  }
+
+  .nav-links > #hamburger-control:checked ~ * {
+    display: block;
+
+    padding-inline: 3rem;
+    right: 0;
+
+    transition: right 0.07s ease-in;
+  }
+}
+
+/* End of navbar */
 
 .logo {
   font-size: 1.6rem;
@@ -304,51 +382,50 @@ footer {
   display: block;
   width: 10rem;
   height: 10rem;
-	aspect-ratio: 1;
-	
-	border-radius: 50%;
-	overflow: clip;
+  aspect-ratio: 1;
 
-	background-color: #442c8b;
-	background-image: linear-gradient(135deg, #5747a6, #201345);
-	color: #dcae27;
+  border-radius: 50%;
+  overflow: clip;
+
+  background-color: #442c8b;
+  background-image: linear-gradient(135deg, #5747a6, #201345);
+  color: #dcae27;
 }
 
 .profile-avatar > * {
-	width: 100%;
-	height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .profile-avatar > span {
-	display: block;
+  display: block;
   font-size: 8rem;
-	line-height: 1.2;
+  line-height: 1.2;
 
-	text-align: center;
+  text-align: center;
 }
 
-
 .profile-card {
-	background-color: white;
+  background-color: white;
 }
 
 .profile-header {
-	display: flex;
-	align-items: center;
-	gap: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 }
 
 @media (width < 600px) {
-	.profile-header {
-		flex-direction: column;
-	}
+  .profile-header {
+    flex-direction: column;
+  }
 }
 
 .profile-title {
-	flex-grow: 1;
+  flex-grow: 1;
 }
 
 .profile-action {
-	min-width: fit-content;
-	align-self: end;
+  min-width: fit-content;
+  align-self: end;
 }
