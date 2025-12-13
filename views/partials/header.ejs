@@ -1,32 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %> | Class Manager</title>
-  <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
-  <header>
-    <nav class="navbar">
-      <div class="logo">
-        <a href="/">Class Manager</a>
-      </div>
-      <ul class="nav-links">
-        <li><a href="/" class="<%= path === '/' ? 'active' : '' %>">Home</a></li>
-        <li><a href="/about" class="<%= path === '/about' ? 'active' : '' %>">About</a></li>
-        <li><a href="/courses" class="<%= path && path.startsWith('/courses') ? 'active' : '' %>">Catalog</a></li>
-        <% if (isAuthenticated) { %>
-          <li><a href="/schedule" class="<%= path === '/schedule' ? 'active' : '' %>">My Schedule</a></li>
-          <li><a href="/user/profile" class="<%= path === '/user/profile' ? 'active' : '' %>">Profile</a></li>
-          <li><a href="/user/settings" class="<%= path === '/user/settings' ? 'active' : '' %>">Settings</a></li>
-          <li><a href="/auth/logout">Logout</a></li>
-        <% } else { %>
-          <li><a href="/auth/login" class="<%= path === '/auth/login' ? 'active' : '' %>">Login</a></li>
-          <li><a href="/auth/register" class="<%= path === '/auth/register' ? 'active' : '' %>">Register</a></li>
-        <% } %>
-      </ul>
-    </nav>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title><%= title %> | Class Manager</title>
+    <link
+      rel="stylesheet"
+      href="/css/styles.css"
+    />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <div class="logo">
+          <a href="/">Class Manager</a>
+        </div>
+        <%- include("../partials/navbar.ejs") %>
+      </nav>
+    </header>
 
-  <main>
+    <main></main>
+  </body>
+</html>
