@@ -1,4 +1,8 @@
-//This will hold all classes loaded from classes.json
+/**
+ * This will hold all classes loaded from classes.json
+ *
+ * @type {import("../../models/Class.js").ClassFE[]}
+ */
 let classes = [];
 
 //loads classes.json into memory
@@ -39,24 +43,24 @@ function renderClassList(list) {
   }
 
   //for every class, a card that displays their information is created
-  list.forEach((c) => {
+  list.forEach((classItem) => {
     const div = document.createElement("div");
     div.className = "class-item";
 
     div.innerHTML = `
             <div>
-                <strong>${c.subject} ${c.number}</strong> - ${
-      c.instructor ?? "TBD"
+                <strong>${classItem.subject} ${classItem.number}</strong> - ${
+      classItem.instructor ?? "TBD"
     }<br>
-                ${c.days_of_week.join(", ")} | ${to12Hour(
-      c.start_time
-    )}-${to12Hour(c.end_time)}<br>
-                Max Seats: ${c.max_seat ?? "TBD"}<br>
-                Max Wait List: ${c.max_wait ?? "TBD"}
+                ${classItem.days_of_week.join(", ")} | ${to12Hour(
+      classItem.start_time
+    )}-${to12Hour(classItem.end_time)}<br>
+                Max Seats: ${classItem.max_seat ?? "TBD"}<br>
+                Max Wait List: ${classItem.max_wait ?? "TBD"}
 
             </div>
-            <button class="sm-btn" onclick='addToSchedule(${JSON.stringify(
-              c
+            <button class="btn" onclick='addToSchedule(${JSON.stringify(
+              classItem
             )})'>Add</button>
         `;
 
@@ -64,7 +68,7 @@ function renderClassList(list) {
   });
 }
 
-//applying filters to seatch
+//applying filters to search
 function applyFilters() {
   const subject = document.getElementById("filterSubject").value;
   const time = document.getElementById("filterTime").value;
@@ -78,7 +82,7 @@ function applyFilters() {
   }
 
   //filter by time of day
-  const hour = (c) => Number(c.start.split(":")[0]);
+  const hour = (c) => Number(c.start_time.split(":")[0]);
   if (time === "morning") result = result.filter((c) => hour(c) < 12);
   if (time === "afternoon")
     result = result.filter((c) => hour(c) >= 12 && hour(c) <= 16);
@@ -129,13 +133,13 @@ function addToSchedule(c) {
   }
   //Test for seeing if the functionality of decreasing class count works before enrolling
   console.log(
-    `Before adding ${c.id}: availableSeats=${c.availableSeats}, availableWait=${c.availableWait}`
+    `Before adding ${c.id}: available_seat=${c.available_seat}, availableWait=${c.available_wait_list}`
   );
 
   //check seat availability
   let enrolledSeat = null;
-  if (c.availableSeats > 0) {
-    c.availableSeats--;
+  if (c.available_seat > 0) {
+    c.available_seat--;
     //enrolled in regular seat
     enrolledSeat = "seat";
   } else if (c.availableWait > 0) {
@@ -159,7 +163,7 @@ function addToSchedule(c) {
   }
   //test to see the counter after enrolling (test should be Before adding: 20 // After adding: 19)
   console.log(
-    `After adding ${c.id}: availableSeats=${c.availableSeats}, availableWait=${c.availableWait}`
+    `After adding ${c.id}: available_seat=${c.available_seat}, availableWait=${c.availableWait}`
   );
   //lets users k ow
   alert("Class has been added to your schedule.");

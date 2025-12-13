@@ -49,41 +49,33 @@ async function findCourseBySubject(subject) {
   }
 }
 
-const search = async ({ subject, time, term }) => {
+const search = async ({ subject, time }) => {
   let sql = `
-    SELECT 
-      c.id, c.code, c.title, c.credits, c.description,
-      s.id as section_id, s.instructor, s.open_seats, s.total_seats,
-      m.day, m.start_time, m.end_time, m.location
+      SELECT 
+        c.id, c.subject, c.number, c.credit,
+	      cl.start_time, cl.end_time, cl.days_of_week
     FROM courses c
-    JOIN sections s ON c.id = s.course_id
-    LEFT JOIN meetings m ON s.id = m.section_id
-    WHERE 1=1
+    LEFT JOIN classes cl ON c.id = cl.id
+    WHERE 1 = 1;
   `;
 
   const params = [];
   let paramIndex = 1;
 
   if (subject) {
-    sql += ` AND c.code ILIKE $${paramIndex}`;
+    sql += ` AND c.subject ILIKE $${paramIndex}`;
     params.push(`%${subject}%`);
     paramIndex++;
   }
 
   if (time) {
-    if (time === "morning") sql += ` AND m.start_time < 1200`;
+    if (time === "morning") sql += ` AND cl.start_time < 1200`;
     else if (time === "afternoon")
-      sql += ` AND m.start_time >= 1200 AND m.start_time < 1700`;
-    else if (time === "evening") sql += ` AND m.start_time >= 1700`;
+      sql += ` AND cl.start_time >= 1200 AND cl.start_time < 1700`;
+    else if (time === "evening") sql += ` AND cl.start_time >= 1700`;
   }
 
-  // Use the active term ID to filter old classes
-  if (term) {
-    sql += ` AND s.term_id = $${paramIndex}`;
-    params.push(term);
-  }
-
-  sql += ` ORDER BY c.code, s.crn`;
+  sql += ` ORDER BY c.subject, c.number`;
 
   const result = await query(sql, params);
   return result.rows;

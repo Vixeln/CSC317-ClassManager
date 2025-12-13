@@ -4,23 +4,27 @@ function loadSchedule() {
     //meant to clr old contents
     grid.innerHTML = "";
     //pull saved schedule from localStorage
+  /**
+   * @type { import("../../models/Class.js").ClassFE[]}
+   */
     const schedule = JSON.parse(localStorage.getItem("schedule")) || [];
+    console.log(localStorage.getItem("schedule"));
     //loop thru schedule and display each class block
-    schedule.forEach((c, X) => {
+  schedule.forEach((classItem, index) => {
         const div = document.createElement("div");
         div.className = "schedule-block";
         div.innerHTML = `
-            <strong>${c.subject} | ${c.id}</strong><br>
-            ${c.professor}<br>
-            ${c.days} | ${to12Hour(c.start)}-${to12Hour(c.end)}
-            <button class="sm-btn" onclick="removeFromSchedule(${X})">Remove</button>
+            <strong>${classItem.subject} | ${classItem.number}</strong><br>
+            Instructor: ${classItem.instructor ?? "TBD"}<br>
+            Meeting Time: ${classItem.days_of_week.join(", ")} | ${to12Hour(
+      classItem.start_time
+    )}-${to12Hour(classItem.end_time)}
+            <button class="btn" onclick="removeFromSchedule(${index})">Remove</button>
             
             `;
         grid.appendChild(div);
     });
 }
-
-
 
 //save schedule (currently a placeholder for a person from backend to code in this functinality)
 function saveSchedule() {
@@ -28,11 +32,23 @@ function saveSchedule() {
     console.log("Upload this to backend:", schedule);
 }
 
+//clear all classes from schedule
+function clearAllSchedule() {
+    localStorage.removeItem("schedule");
+    loadSchedule();
+}
+
 //connects saveSchedule to button
 document.getElementById("saveSchedule").addEventListener("click", saveSchedule);
 
-//automatically loads schedule
-loadSchedule();
+//connects clearSchedule to button
+document.getElementById("clearSchedule").addEventListener("click", clearAllSchedule);
+
+window.addEventListener('storage', (e) => {
+  if (e.key === 'schedule') {
+    loadSchedule(); // reload when localStorage changes
+  }
+});
 
 //same as in search.js
 function to12Hour(timeString) {
@@ -61,8 +77,8 @@ function removeFromSchedule(index) {
             //plan for future implementation: allow the case that if there are students in the wait list to be moved into
             //the class if a student from availableSeats removes the class. from there increment the subsequent students
             //in the waitlist up a spot 
-            if (c.enrolledSeat === "seat") classes[classIndex].availableSeats++;
-            else if (c.enrolledSeat === "wait") classes[classIndex].availableWait++;
+            if (c.enrolledSeat === "seat") classes[classIndex].available_seat++;
+            else if (c.enrolledSeat === "wait") classes[classIndex].available_wait_list++;
         }
     }
 
@@ -72,5 +88,10 @@ function removeFromSchedule(index) {
     localStorage.setItem("schedule", JSON.stringify(schedule));
     //Refreshes schedule
     loadSchedule();
+
+
 }
+
+//load schedule on page load
+loadSchedule();
 
