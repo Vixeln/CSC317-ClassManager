@@ -10,7 +10,7 @@
     <form action="/user/settings" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       
-      <div class="form-group">
+      <div class="input-group">
         <label for="username">Username</label>
         <input 
           type="text" 
@@ -23,7 +23,7 @@
         >
       </div>
       
-      <div class="form-group">
+      <div class="input-group">
         <label for="email">Email Address</label>
         <input 
           type="email" 
@@ -35,7 +35,7 @@
         <div class="form-hint">Email cannot be changed</div>
       </div>
       
-      <div class="form-group">
+      <div class="input-group">
         <label for="profileImage">Profile Image</label>
         <input 
           type="file" 
@@ -47,7 +47,7 @@
       </div>
       
       <div class="form-actions">
-        <button type="submit" class="btn primary-btn">Save Changes</button>
+        <button type="submit" class="cta-btn">Save Changes</button>
       </div>
     </form>
     
