@@ -8,11 +8,21 @@ const Class = require("../models/Class");
 const Term = require("../models/Term");
 
 // View: Shows the HTML page
-exports.getSearchPage = (req, res) => {
+exports.getSearchPage = async (req, res) => {
+  try {
+    const subjects = await Course.getAllSubjects();
+    res.render("courses/search", {
+      title: "Search Classes",
+      user: req.session.user,
+      subjects: subjects
+    });
+  } catch (error) {
   res.render("courses/search", {
     title: "Search Classes",
     user: req.session.user,
+      subjects: []
   });
+  }
 };
 
 // API: Returns JSON data
