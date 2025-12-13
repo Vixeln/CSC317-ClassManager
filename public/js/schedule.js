@@ -4,16 +4,21 @@ function loadSchedule() {
     //meant to clr old contents
     grid.innerHTML = "";
     //pull saved schedule from localStorage
+  /**
+   * @type { import("../../models/Class.js").ClassFE[]}
+   */
     const schedule = JSON.parse(localStorage.getItem("schedule")) || [];
     //loop thru schedule and display each class block
-    schedule.forEach((c, X) => {
+  schedule.forEach((classItem, index) => {
         const div = document.createElement("div");
         div.className = "schedule-block";
         div.innerHTML = `
-            <strong>${c.subject} | ${c.id}</strong><br>
-            ${c.professor}<br>
-            ${c.days} | ${to12Hour(c.start)}-${to12Hour(c.end)}
-            <button class="sm-btn" onclick="removeFromSchedule(${X})">Remove</button>
+            <strong>${classItem.subject} | ${classItem.number}</strong><br>
+            Instructor: ${classItem.instructor ?? "TBD"}<br>
+            Meeting Time: ${classItem.days_of_week.join(", ")} | ${to12Hour(
+      classItem.start_time
+    )}-${to12Hour(classItem.end_time)}
+            <button class="btn" onclick="removeFromSchedule(${index})">Remove</button>
             
             `;
         grid.appendChild(div);
