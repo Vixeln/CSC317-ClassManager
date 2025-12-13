@@ -64,7 +64,7 @@ function renderClassList(list) {
   });
 }
 
-//applying filters to seatch
+//applying filters to search
 function applyFilters() {
   const subject = document.getElementById("filterSubject").value;
   const time = document.getElementById("filterTime").value;
@@ -78,7 +78,7 @@ function applyFilters() {
   }
 
   //filter by time of day
-  const hour = (c) => Number(c.start.split(":")[0]);
+  const hour = (c) => Number(c.start_time.split(":")[0]);
   if (time === "morning") result = result.filter((c) => hour(c) < 12);
   if (time === "afternoon")
     result = result.filter((c) => hour(c) >= 12 && hour(c) <= 16);
