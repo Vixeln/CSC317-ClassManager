@@ -1,4 +1,8 @@
-//This will hold all classes loaded from classes.json
+/**
+ * This will hold all classes loaded from classes.json
+ *
+ * @type {import("../../models/Class.js").ClassFE[]}
+ */
 let classes = [];
 
 //loads classes.json into memory
@@ -39,24 +43,24 @@ function renderClassList(list) {
   }
 
   //for every class, a card that displays their information is created
-  list.forEach((c) => {
+  list.forEach((classItem) => {
     const div = document.createElement("div");
     div.className = "class-item";
 
     div.innerHTML = `
             <div>
-                <strong>${c.subject} ${c.number}</strong> - ${
-      c.instructor ?? "TBD"
+                <strong>${classItem.subject} ${classItem.number}</strong> - ${
+      classItem.instructor ?? "TBD"
     }<br>
-                ${c.days_of_week.join(", ")} | ${to12Hour(
-      c.start_time
-    )}-${to12Hour(c.end_time)}<br>
-                Max Seats: ${c.max_seat ?? "TBD"}<br>
-                Max Wait List: ${c.max_wait ?? "TBD"}
+                ${classItem.days_of_week.join(", ")} | ${to12Hour(
+      classItem.start_time
+    )}-${to12Hour(classItem.end_time)}<br>
+                Max Seats: ${classItem.max_seat ?? "TBD"}<br>
+                Max Wait List: ${classItem.max_wait ?? "TBD"}
 
             </div>
             <button class="sm-btn" onclick='addToSchedule(${JSON.stringify(
-              c
+              classItem
             )})'>Add</button>
         `;
 
