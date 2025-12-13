@@ -129,13 +129,13 @@ function addToSchedule(c) {
   }
   //Test for seeing if the functionality of decreasing class count works before enrolling
   console.log(
-    `Before adding ${c.id}: availableSeats=${c.availableSeats}, availableWait=${c.availableWait}`
+    `Before adding ${c.id}: available_seat=${c.available_seat}, availableWait=${c.available_wait_list}`
   );
 
   //check seat availability
   let enrolledSeat = null;
-  if (c.availableSeats > 0) {
-    c.availableSeats--;
+  if (c.available_seat > 0) {
+    c.available_seat--;
     //enrolled in regular seat
     enrolledSeat = "seat";
   } else if (c.availableWait > 0) {
@@ -159,7 +159,7 @@ function addToSchedule(c) {
   }
   //test to see the counter after enrolling (test should be Before adding: 20 // After adding: 19)
   console.log(
-    `After adding ${c.id}: availableSeats=${c.availableSeats}, availableWait=${c.availableWait}`
+    `After adding ${c.id}: available_seat=${c.available_seat}, availableWait=${c.availableWait}`
   );
   //lets users k ow
   alert("Class has been added to your schedule.");
