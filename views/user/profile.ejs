@@ -4,7 +4,7 @@
   <div class="profile-container">
     <h1>User Profile</h1>
     
-    <div class="profile-card">
+    <div class="profile-card card">
       <div class="profile-header">
         <div class="profile-avatar">
           <% if (user.hasProfileImage) { %>
@@ -16,19 +16,10 @@
         </div>
         <div class="profile-title">
           <h2><%= user.username %></h2>
+					<address><a href = <%= user.email %>><%= user.email %></a></address>
           <p class="subtitle">Member since <%= typeof user.createdAt !== 'undefined' ? helpers.formatDate(user.createdAt) : 'N/A' %></p>
         </div>
-      </div>
-      
-      <div class="profile-info">
-        <div class="info-item">
-          <span class="label">Email Address</span>
-          <span class="value"><%= user.email %></span>
-        </div>
-      </div>
-      
-      <div class="profile-actions">
-        <a href="/user/settings" class="btn secondary-btn">Edit Profile</a>
+				<a href="/user/settings" class="btn secondary-btn profile-action">Edit Profile</a>
       </div>
     </div>
     
