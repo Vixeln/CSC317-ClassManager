@@ -59,7 +59,7 @@ function renderClassList(list) {
                 Max Wait List: ${classItem.max_wait ?? "TBD"}
 
             </div>
-            <button class="sm-btn" onclick='addToSchedule(${JSON.stringify(
+            <button class="btn" onclick='addToSchedule(${JSON.stringify(
               classItem
             )})'>Add</button>
         `;
